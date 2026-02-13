@@ -1,0 +1,27 @@
+﻿services:
+  - type: web
+    name: stock-sentiment-api
+    env: python
+    buildCommand: pip install -r requirements-prod.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: stock-sentiment-db
+          property: connectionString
+      - key: TWITTER_API_KEY
+        sync: false
+
+  - type: web
+    name: stock-sentiment-dashboard
+    env: static
+    buildCommand: cd dashboard/frontend && npm install && npm run build
+    staticPublishPath: ./dashboard/frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://stock-sentiment-api.onrender.com
+
+databases:
+  - name: stock-sentiment-db
+    databaseName: stock_sentiment
+    user: stock_sentiment_user
