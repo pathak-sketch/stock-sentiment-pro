@@ -24,10 +24,8 @@
         value: production
 
   # Frontend Static Site
-  - type: web
+  - type: static
     name: stock-sentiment-dashboard
-    runtime: static
-    region: singapore
     plan: free
     buildCommand: cd dashboard/frontend && npm install && npm run build
     staticPublishPath: ./dashboard/frontend/build
@@ -38,6 +36,5 @@
 databases:
   - name: stock-sentiment-db
     plan: free
-    region: singapore
     databaseName: stock_sentiment
     user: stock_user
