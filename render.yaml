@@ -24,9 +24,9 @@
         value: production
 
   # Frontend Static Site
-  - type: web
+    # Frontend Static Site
+  - type: static
     name: stock-sentiment-dashboard
-    runtime: static
     plan: free
     buildCommand: cd dashboard/frontend && npm install && npm run build
     staticPublishPath: ./dashboard/frontend/build
