@@ -7,28 +7,28 @@ projects:
       - name: Production
         services:
           - type: web
-            name: stock-sentiment-api
-            runtime: python
-            region: frankfurt
-            plan: free
-            buildCommand: pip install -r requirements.txt
-            startCommand: uvicorn dashboard.backend.main:app --host 0.0.0.0 --port $PORT
+             name: stock-sentiment-api
+             runtime: python
+             region: frankfurt
+             plan: free
+             rootDir: dashboard/backend
+             buildCommand: pip install -r requirements.txt
+             startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
             envVars:
-              - key: DATABASE_URL
-                fromDatabase:
-                  name: stock-sentiment-db
-                  property: connectionString
-              - key: TWITTER_API_KEY
-                sync: false
-              - key: TWITTER_API_SECRET
-                sync: false
-              - key: TWITTER_ACCESS_TOKEN
-                sync: false
-              - key: TWITTER_ACCESS_SECRET
-                sync: false
-              - key: ENVIRONMENT
-                value: production
-
+             - key: DATABASE_URL
+               fromDatabase:
+                name: stock-sentiment-db
+                property: connectionString
+          - key: TWITTER_API_KEY
+            sync: false
+          - key: TWITTER_API_SECRET
+            sync: false
+          - key: TWITTER_ACCESS_TOKEN
+            sync: false
+          - key: TWITTER_ACCESS_SECRET
+            sync: false
+          - key: ENVIRONMENT
+            value: production
           - type: web
             name: stock-sentiment-dashboard
             runtime: static
