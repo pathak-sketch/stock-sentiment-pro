@@ -11,9 +11,8 @@ projects:
             runtime: python
             region: frankfurt
             plan: free
-            rootDir: dashboard/backend
-            buildCommand: pip install -r requirements.txt
-            startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+            buildCommand: pip install -r dashboard/backend/requirements.txt
+            startCommand: uvicorn dashboard.backend.main:app --host 0.0.0.0 --port $PORT
             envVars:
               - key: DATABASE_URL
                 fromDatabase:
