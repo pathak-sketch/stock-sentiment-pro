@@ -1,4 +1,11 @@
-﻿from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+﻿from fastapi import FastAPI
+
+app = FastAPI(title="Stock Sentiment API")
+
+@app.get("/")
+async def root():
+    return {"message": "Stock Sentiment API is running!", "status": "online"}
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from datetime import datetime
@@ -196,3 +203,4 @@ if __name__ == "__main__":
     print("\n" + "=" * 60)
     
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
