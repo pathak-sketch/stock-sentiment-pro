@@ -23,7 +23,7 @@
       - key: ENVIRONMENT
         value: production
 
-  # Frontend Static Site - use runtime: static
+  # Frontend Static Site
   - type: web
     name: stock-sentiment-dashboard
     runtime: static
