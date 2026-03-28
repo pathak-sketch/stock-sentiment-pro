@@ -146,6 +146,7 @@ sentiments = ["positive", "negative", "neutral"]
 # Root endpoint – after app is defined
 @app.get("/")
 async def root():
+    print("ROOT ROUTE HIT")   # This will appear in Render logs
     return {
         "message": "🚀 Stock Sentiment API is running!",
         "version": "2.0.0",
