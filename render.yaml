@@ -24,7 +24,6 @@
         value: production
 
   # Frontend Static Site
-    # Frontend Static Site
   - type: static
     name: stock-sentiment-dashboard
     plan: free
