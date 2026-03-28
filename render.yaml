@@ -23,9 +23,10 @@
       - key: ENVIRONMENT
         value: production
 
-  # Frontend Static Site
-  - type: static
+  # Frontend Static Site - use runtime: static
+  - type: web
     name: stock-sentiment-dashboard
+    runtime: static
     plan: free
     buildCommand: cd dashboard/frontend && npm install && npm run build
     staticPublishPath: ./dashboard/frontend/build
