@@ -24,11 +24,12 @@
         value: production
 
   # Frontend Static Site
-  - type: static
+  - type: static_site
     name: stock-sentiment-dashboard
     plan: free
-    buildCommand: cd dashboard/frontend && npm install && npm run build
-    staticPublishPath: ./dashboard/frontend/build
+    rootDir: dashboard/frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
     envVars:
       - key: REACT_APP_API_URL
         value: https://stock-sentiment-api.onrender.com
