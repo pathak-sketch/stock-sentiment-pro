@@ -1,16 +1,51 @@
 ﻿# Exported from Render on 2026-03-28T17:53:03Z
 version: "1"
+
 projects:
-- name: My project
-  environments:
-  - name: Production
-    databases:
-    - name: stock-sentiment-db
-      databaseName: stock_sentiment
-      user: stock_user
-      plan: free
-      region: frankfurt
-      ipAllowList:
-      - source: 0.0.0.0/0
-        description: everywhere
-      postgresMajorVersion: "18"
+  - name: My project
+    environments:
+      - name: Production
+        services:
+          - type: web
+            name: stock-sentiment-api
+            runtime: python
+            region: frankfurt
+            plan: free
+            buildCommand: pip install -r requirements.txt
+            startCommand: uvicorn dashboard.backend.main:app --host 0.0.0.0 --port $PORT
+            envVars:
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: stock-sentiment-db
+                  property: connectionString
+              - key: TWITTER_API_KEY
+                sync: false
+              - key: TWITTER_API_SECRET
+                sync: false
+              - key: TWITTER_ACCESS_TOKEN
+                sync: false
+              - key: TWITTER_ACCESS_SECRET
+                sync: false
+              - key: ENVIRONMENT
+                value: production
+
+          - type: web
+            name: stock-sentiment-dashboard
+            runtime: static
+            rootDir: dashboard/frontend
+            buildCommand: npm install && npm run build
+            staticPublishPath: ./build
+            envVars:
+              - key: REACT_APP_API_URL
+                value: https://stock-sentiment-api.onrender.com
+
+        databases:
+          - name: stock-sentiment-db
+            databaseName: stock_sentiment
+            user: stock_user
+            plan: free
+            region: frankfurt
+            ipAllowList:
+              - source: 0.0.0.0/0
+                description: everywhere
+            postgresMajorVersion: "18"
