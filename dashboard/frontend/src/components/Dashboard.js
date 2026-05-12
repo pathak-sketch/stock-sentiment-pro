@@ -45,12 +45,10 @@ function Dashboard() {
     return ( <
         Container maxWidth = "lg"
         sx = {
-            { py: 4 }
-        } >
+            { py: 4 } } >
         <
         Paper sx = {
-            { p: 3, mb: 3 }
-        } >
+            { p: 3, mb: 3 } } >
         <
         Typography variant = "h4"
         component = "h1"
@@ -73,13 +71,11 @@ function Dashboard() {
         TextField fullWidth placeholder = "Enter stock symbol (e.g., AAPL, GOOGL)"
         value = { stock }
         onChange = {
-            (e) => setStock(e.target.value)
-        }
+            (e) => setStock(e.target.value) }
         onKeyPress = {
-            (e) => e.key === 'Enter' && handleSearch()
-        }
-        /> < /
-        Grid > <
+            (e) => e.key === 'Enter' && handleSearch() }
+        /> <
+        /Grid> <
         Grid item xs = { 12 }
         sm = { 3 } >
         <
@@ -87,11 +83,12 @@ function Dashboard() {
         color = "primary"
         onClick = { handleSearch }
         disabled = { loading }
-        startIcon = { loading ? < CircularProgress size = { 20 } /> : <SearchIcon / > } > { loading ? 'Analyzing...' : 'Analyze' } <
-        /Button> < /
-        Grid > <
-        /Grid> < /
-        Paper >
+        startIcon = { loading ? < CircularProgress size = { 20 } /> : <SearchIcon / > } >
+        { loading ? 'Analyzing...' : 'Analyze' } <
+        /Button> <
+        /Grid> <
+        /Grid> <
+        /Paper>
 
         {
             error && < Alert severity = "error" > { error } < /Alert>}
@@ -113,10 +110,10 @@ function Dashboard() {
                     /Typography> <
                     Typography variant = "h5"
                     color = "primary" > { sentiment.sentiment_score ? .toFixed(2) || 'N/A' } <
-                    /Typography> < /
-                    CardContent > <
-                    /Card> < /
-                    Grid > <
+                    /Typography> <
+                    /CardContent> <
+                    /Card> <
+                    /Grid> <
                     Grid item xs = { 12 }
                     sm = { 6 } >
                     <
@@ -130,10 +127,10 @@ function Dashboard() {
                     /Typography> <
                     Typography variant = "h5"
                     color = "primary" > { sentiment.sentiment_label || 'N/A' } <
-                    /Typography> < /
-                    CardContent > <
-                    /Card> < /
-                    Grid > <
+                    /Typography> <
+                    /CardContent> <
+                    /Card> <
+                    /Grid> <
                     /Grid>
                 )
             } <
