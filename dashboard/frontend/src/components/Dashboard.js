@@ -31,9 +31,7 @@ function Dashboard() {
 
         try {
             const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
-            const response = await fetch(
-                `${apiUrl}/analyze/${stock.toUpperCase()}`
-            );
+            const response = await fetch(`${apiUrl}/analyze/${stock.toUpperCase()}`);
             const data = await response.json();
             setSentiment(data);
         } catch (err) {
