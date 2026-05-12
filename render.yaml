@@ -33,9 +33,9 @@ projects:
           - type: web
             name: stock-sentiment-dashboard
             runtime: static
-            rootDir: dashboard/frontend
-            buildCommand: npm install && npm run build
-            staticPublishPath: build
+            rootDir: .
+            buildCommand: cd dashboard/frontend && npm install && npm run build
+            staticPublishPath: dashboard/frontend/build
             envVars:
               - key: REACT_APP_API_URL
                 value: https://stock-sentiment-api.onrender.com

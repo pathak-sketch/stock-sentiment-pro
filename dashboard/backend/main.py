@@ -157,6 +157,7 @@ async def root():
 
 @app.get("/health")
 async def health():
+    print("HEALTH CHECK HIT")   # This will appear in Render logs
     return {
         "status": "healthy",
         "database": "connected" if DATABASE_AVAILABLE else "disconnected",
