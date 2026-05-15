@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import {
     Container,
     Paper,
@@ -19,7 +19,14 @@ function Dashboard() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const handleSearch = async() => {
+    const getSentimentLabel = (score) => {
+        if (score === null || score === undefined) return 'N/A';
+        if (score >= 0.2) return 'positive';
+        if (score <= -0.2) return 'negative';
+        return 'neutral';
+    };
+
+    const handleSearch = async () => {
         if (!stock.trim()) {
             setError('Please enter a stock symbol');
             return;
@@ -31,11 +38,26 @@ function Dashboard() {
 
         try {
             const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
-            const response = await fetch(`${apiUrl}/analyze/${stock.toUpperCase()}`);
+            const response = await fetch(`${apiUrl}/api/sentiment/${stock.toUpperCase()}`);
             const data = await response.json();
-            setSentiment(data);
+
+            if (data.error) {
+                throw new Error(`${data.error}${data.available ? ' Available: ' + data.available.join(', ') : ''}`);
+            }
+
+            if (!response.ok) {
+                throw new Error(data.detail || 'Failed to fetch sentiment data');
+            }
+
+            const score = data.summary?.avg_sentiment ?? data.score ?? null;
+            const label = data.sentiment ?? getSentimentLabel(score);
+
+            setSentiment({
+                sentiment_score: score,
+                sentiment_label: label,
+            });
         } catch (err) {
-            setError('Failed to fetch sentiment data. Please try again.');
+            setError(err.message || 'Failed to fetch sentiment data. Please try again.');
             console.error(err);
         } finally {
             setLoading(false);
@@ -88,7 +110,9 @@ function Dashboard() {
                                     Sentiment Score
                                 </Typography>
                                 <Typography variant="h5" color="primary">
-                                    {sentiment.sentiment_score?.toFixed(2) || 'N/A'}
+                                    {sentiment.sentiment_score !== null && sentiment.sentiment_score !== undefined
+                                        ? sentiment.sentiment_score.toFixed(2)
+                                        : 'N/A'}
                                 </Typography>
                             </CardContent>
                         </Card>
