@@ -42,7 +42,7 @@ function Dashboard() {
             const data = await response.json();
 
             if (data.error) {
-                throw new Error(`${data.error}${data.available ? ' Available: ' + data.available.join(', ') : ''}`);
+                throw new Error(data.error);
             }
 
             if (!response.ok) {
